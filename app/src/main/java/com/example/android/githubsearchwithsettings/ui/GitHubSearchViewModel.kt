@@ -19,10 +19,16 @@ class GitHubSearchViewModel : ViewModel() {
     private val _loadingStatus = MutableLiveData(LoadingStatus.SUCCESS)
     val loadingStatus: LiveData<LoadingStatus> = _loadingStatus
 
-    fun loadSearchResults(query: String) {
+    fun loadSearchResults(
+        query: String,
+        sort: String?,
+        user: String?,
+        languages: Set<String>?,
+        firstIssues: Int
+    ) {
         viewModelScope.launch {
             _loadingStatus.value = LoadingStatus.LOADING
-            val result = repository.loadRepositoriesSearch(query)
+            val result = repository.loadRepositoriesSearch(query, sort, user, languages, firstIssues)
             _searchResults.value = result.getOrNull()
             _loadingStatus.value = when (result.isSuccess) {
                 true ->  LoadingStatus.SUCCESS

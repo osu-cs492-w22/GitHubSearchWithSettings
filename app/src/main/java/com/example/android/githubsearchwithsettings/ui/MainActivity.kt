@@ -12,6 +12,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import androidx.activity.viewModels
+import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.android.githubsearchwithsettings.R
@@ -68,11 +69,29 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this)
+
         val searchBtn: Button = findViewById(R.id.btn_search)
         searchBtn.setOnClickListener {
             val query = searchBoxET.text.toString()
             if (!TextUtils.isEmpty(query)) {
-                viewModel.loadSearchResults(query)
+                val sort = sharedPrefs.getString(
+                    getString(R.string.pref_sort_key),
+                    null
+                )
+                val user = sharedPrefs.getString(
+                    getString(R.string.pref_user_key),
+                    null
+                )
+                val languages = sharedPrefs.getStringSet(
+                    getString(R.string.pref_language_key),
+                    null
+                )
+                val firstIssues = sharedPrefs.getInt(
+                    getString(R.string.pref_first_issues_key),
+                    0
+                )
+                viewModel.loadSearchResults(query, sort, user, languages, firstIssues)
                 searchResultsListRV.scrollToPosition(0)
             }
         }

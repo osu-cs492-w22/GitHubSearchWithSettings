@@ -50,4 +50,11 @@
     <string name="pref_language_val_javascript" translatable="false">javascript</string>
     <string name="pref_language_val_rust" translatable="false">rust</string>
     <string name="pref_language_val_python" translatable="false">python</string>
+
+    <string name="pref_language_not_set">Not set</string>
+
+    <plurals name="pref_language_summary">
+        <item quantity="one">%d language</item>
+        <item quantity="other">%d languages</item>
+    </plurals>
 </resources>
